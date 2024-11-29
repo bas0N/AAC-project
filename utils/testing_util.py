@@ -20,6 +20,9 @@ class TestingUtil:
         """
         print(f"Running test: {test_name}")
         start_time = time.perf_counter()
+        result = None
+        if(input is None):
+            result = self.testing_function()
         result = self.testing_function(input)
         end_time = time.perf_counter()
         execution_time = end_time - start_time

@@ -1,3 +1,4 @@
+import numpy as np
 class GraphDistanceCalculator:
     """
     A class to calculate the distance between two graphs represented by adjacency matrices.
