@@ -6,7 +6,7 @@ class GraphSizeCalculator:
         pass
 
     @staticmethod
-    def graph_size(adjacency_matrix, is_directed):
+    def graph_size(input):
         """
         Calculate the size (number of edges) of a graph.
 
@@ -14,6 +14,7 @@ class GraphSizeCalculator:
         :param is_directed: A boolean indicating if the graph is directed.
         :return: The number of edges in the graph.
         """
+        adjacency_matrix, is_directed = input
         if is_directed:
             # Count all edges in a directed graph
             return sum(sum(row) for row in adjacency_matrix)

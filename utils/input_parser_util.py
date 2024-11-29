@@ -1,4 +1,4 @@
-class GraphInputParserUtil:
+class InputParserUtil:
     def __init__(self):
         self.graphs = []
 
