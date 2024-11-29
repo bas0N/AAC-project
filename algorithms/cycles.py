@@ -62,7 +62,7 @@ def find_all_cycles(input_data):
     max_cycle_length = max(len(cycle) for cycle in all_cycles) if all_cycles else 0
     max_cycles = [cycle for cycle in all_cycles if len(cycle) == max_cycle_length]
 
-    return {"cycles": all_cycles, "max_cycle_length": max_cycle_length, "max_cycles": max_cycles}
+    return {"max_cycle_length": max_cycle_length, "max_cycles": max_cycles,"cycles": all_cycles}
 
 def approximate_max_cycles(input_data):
     adj_matrix, iterations, is_directed = input_data["adjacency_matrix"], input_data["iterations"], input_data["is_directed"]
