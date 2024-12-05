@@ -19,7 +19,9 @@ def is_hamiltonian(adj_matrix):
             return True
     return False
 
-def make_hamiltonian(adj_matrix, directed=False):
+def min_num_hamiltonian_extension_exact(input_data):
+    adj_matrix, directed = input_data["adjacency_matrix"], input_data["is_directed"]
+
     """
     Return the minimal number of edges needed to make the graph Hamiltonian.
     """
@@ -56,17 +58,6 @@ def make_hamiltonian(adj_matrix, directed=False):
 from itertools import combinations
 import random
 
-def is_valid_cycle(path, adj_matrix):
-    """
-    Check if the given path forms a valid Hamiltonian cycle.
-    A Hamiltonian cycle visits every node exactly once and returns to the starting node.
-    """
-    for i in range(len(path)):
-        u, v = path[i], path[(i + 1) % len(path)]  # Wrap around for cyclic path
-        if adj_matrix[u][v] == 0:  # No edge between consecutive nodes
-            return False
-    return True
-
 def approximate_hamiltonian_cycle(adj_matrix):
     """
     Approximate whether the graph contains a Hamiltonian cycle using a greedy traversal.
@@ -85,8 +76,10 @@ def approximate_hamiltonian_cycle(adj_matrix):
     # Check if all nodes are visited and the last visited node connects back to the first
     return len(visited) == n and adj_matrix[current][0] == 1
 
-def make_hamiltonian_heuristic(adj_matrix, directed=False, max_iterations=1000):
-   """
+def min_num_hamiltonian_extension_approx(input_data):
+    adj_matrix, directed, iterations = input_data["adjacency_matrix"], input_data["is_directed"], input_data["iterations"]
+
+    """
     Approximate the minimal number of edges needed to make the graph Hamiltonian.
 
     Heuristics Used:
@@ -100,7 +93,7 @@ def make_hamiltonian_heuristic(adj_matrix, directed=False, max_iterations=1000):
     Args:
         adj_matrix: The adjacency matrix of the graph.
         directed: If True, consider the graph as directed; otherwise, undirected.
-        max_iterations: The maximum number of edge combinations to sample for each k.
+        iterations: The maximum number of edge combinations to sample for each k.
 
     Returns:
         int: The approximate minimal number of edges needed to make the graph Hamiltonian,
@@ -119,7 +112,7 @@ def make_hamiltonian_heuristic(adj_matrix, directed=False, max_iterations=1000):
 
     # Step 3: Iteratively try adding k edges
     for k in range(1, len(edges) + 1):
-        for edge_combination in random.sample(list(combinations(edges, k)), min(max_iterations, len(list(combinations(edges, k))))):
+        for edge_combination in random.sample(list(combinations(edges, k)), min(iterations, len(list(combinations(edges, k))))):
             # Create a new adjacency matrix with the additional edges
             new_matrix = [row[:] for row in adj_matrix]
             for u, v in edge_combination:

@@ -1,5 +1,7 @@
 # find all hamiltonian cycles (backtracking - exact solution)
-def count_hamiltonian_cycles_bac(adj_matrix, is_directed):
+def count_hamiltonian_cycles_backtrack(input_data):
+    adj_matrix, is_directed = input_data["adjacency_matrix"], input_data["is_directed"]
+
     """
     Counts the number of Hamiltonian cycles in a graph using a backtracking approach.
 
@@ -82,72 +84,12 @@ def count_hamiltonian_cycles_bac(adj_matrix, is_directed):
 
     return cycle_count
 
-
-
-# find all hamiltonian cycles (approximation - random solution)
-import random
-
-def count_hamiltonian_cycles_randomized(adj_matrix, is_directed, iterations=1000):
-    """
-    Counts the number of Hamiltonian cycles in a graph using a randomized approach.
-
-    Args:
-        adj_matrix (list[list[int]]): Adjacency matrix of the graph.
-        is_directed (bool): True if the graph is directed, False otherwise.
-        iterations (int): Number of random paths to evaluate.
-
-    Returns:
-        int: The estimated number of Hamiltonian cycles.
-    """
-    def is_valid_cycle(path):
-        """Check if the path is a valid Hamiltonian cycle."""
-        for i in range(len(path)):
-            u, v = path[i], path[(i + 1) % len(path)]
-            if adj_matrix[u][v] == 0:
-                return False
-        return True
-
-    def normalize_cycle(path, is_directed):
-        """Normalize cycle for uniqueness."""
-        edges = [(path[i], path[(i + 1) % len(path)]) for i in range(len(path))]
-
-        if is_directed:
-            # Lexicographically smallest rotation for directed graphs
-            min_rotation = edges[:]
-            for i in range(1, len(edges)):
-                rotation = edges[i:] + edges[:i]
-                if rotation < min_rotation:
-                    min_rotation = rotation
-            return tuple(min_rotation)
-        else:
-            # Handle undirected case: consider all rotations and reversals
-            edges = [tuple(sorted(edge)) for edge in edges]
-            all_rotations = []
-            for i in range(len(edges)):
-                rotation = edges[i:] + edges[:i]
-                all_rotations.append(rotation)
-                all_rotations.append(rotation[::-1])
-            return tuple(min(all_rotations))
-
-    n = len(adj_matrix)
-    nodes = list(range(n))
-    unique_cycles = set()
-
-    for _ in range(iterations):
-        # Randomly shuffle the nodes to create a random path
-        random.shuffle(nodes)
-        if is_valid_cycle(nodes):
-            # Normalize the cycle and add it to the set of unique cycles
-            normalized_cycle = normalize_cycle(nodes, is_directed)
-            unique_cycles.add(normalized_cycle)
-
-    return len(unique_cycles)
-
 # find all hamiltonian cycles (approximation - biased solution)
 import random
 from collections import defaultdict
 
-def count_hamiltonian_cycles_biased(adj_matrix, is_directed, iterations=1000):
+def count_hamiltonian_cycles_randomized_biased(input_data):
+    adj_matrix, is_directed, iterations = input_data["adjacency_matrix"], input_data["is_directed"], input_data["iterations"]
     """
     Counts the number of Hamiltonian cycles in a graph using a biased randomized approach.
 
@@ -232,7 +174,9 @@ def count_hamiltonian_cycles_biased(adj_matrix, is_directed, iterations=1000):
 # find all hamiltonian cycles (approximation - genetic solution)
 import random
 
-def count_hamiltonian_cycles_genetic(adj_matrix, is_directed, iterations=1000, population_size=50, generations=100):
+def count_hamiltonian_cycles_genetic(input_data):
+    adj_matrix, is_directed,population_size, generations = input_data["adjacency_matrix"], input_data["is_directed"], input_data["population_size"], input_data["generations"]
+
     def is_valid_cycle(path):
         """Check if the path is a valid Hamiltonian cycle."""
         for i in range(len(path)):
