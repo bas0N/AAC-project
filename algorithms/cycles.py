@@ -33,7 +33,7 @@ def normalize_cycle(path, is_directed):
 
     return normalized
 
-def find_all_cycles(input_data):
+def find_all_cycles(input_data): #Find all cycles, then filter to get only the maximum length cycles
     graph, is_directed = input_data["adjacency_matrix"], input_data["is_directed"]
     def dfs(v, start, visited, path, cycles):
         visited[v] = True
@@ -62,7 +62,7 @@ def find_all_cycles(input_data):
     max_cycle_length = max(len(cycle) for cycle in all_cycles) if all_cycles else 0
     max_cycles = [cycle for cycle in all_cycles if len(cycle) == max_cycle_length]
 
-    return {"max_cycle_length": max_cycle_length, "max_cycles": max_cycles,"cycles": all_cycles}
+    return {"max_cycle_length": max_cycle_length, "num_max_cycles": len(max_cycles)}
 
 def approximate_max_cycles(input_data):
     adj_matrix, iterations, is_directed = input_data["adjacency_matrix"], input_data["iterations"], input_data["is_directed"]
