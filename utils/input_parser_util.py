@@ -72,3 +72,29 @@ class InputParserUtil:
             })
 
         return parsed_graphs
+
+    def read_matrix_file(self, file_path: str):
+        """
+        Reads a file containing:
+        - On the first line: an integer n (the dimension of the matrix).
+        - On the next n lines: n integers per line, separated by spaces.
+
+        Returns:
+        --------
+        n : int
+            The dimension of the matrix.
+        matrix : list of lists of int
+            The matrix read from the file.
+        """
+        with open(file_path, 'r') as f:
+          return f.read()
+
+
+    def is_directed(adj):
+        n = len(adj)
+        for i in range(n):
+            for j in range(n):
+                if adj[i][j] != adj[j][i]:
+                    return True  # Found a pair that breaks symmetry
+        return False  # All pairs are symmetric
+

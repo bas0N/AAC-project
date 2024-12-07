@@ -26,6 +26,6 @@ class TestingUtil:
         result = self.testing_function(input)
         end_time = time.perf_counter()
         execution_time = end_time - start_time
-        print(f"Test '{test_name}' completed in {execution_time:.6f} seconds")
-        print(f"Result of test '{test_name}': {result}")
+        print(f"Test completed in {execution_time:.6f} seconds")
+        print(f"Result of test : {result}")
         return result, execution_time
